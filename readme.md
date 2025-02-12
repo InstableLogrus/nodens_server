@@ -1,4 +1,21 @@
-# Node.js MongoDB Boilerplate
+
+
+# interessant a check
+
+https://github.com/dotenvx/dotenvx -> dotenv mais chiffré
+
+
+# incorporé dans l'API
+
+fausses données: https://github.com/faker-js/faker
+doc: swagger https://swagger.io/
+
+# 
+
+
+
+# Node.js MongoDB Boilerplate 
+origine --> https://github.com/saniaali224/node-mongo-swagger-awss3-boilerplate
 
 This is a boilerplate for building a Node.js API with MongoDB, using modern ES modules and a clean architecture. It includes basic setup for environment variables, database connection, API routing, and Swagger documentation.
 
@@ -11,13 +28,11 @@ This is a boilerplate for building a Node.js API with MongoDB, using modern ES m
 - **Swagger UI**: API documentation with Swagger.
 - **Nodemon**: Automatic server restarting for development.
 - **Prettier & ESLint**: Code formatting and linting using Airbnb's style guide.
-- **AWS SDK**: Integration for uploading files to AWS S3.
 
 ## Folder Structure
 
 .
 ├── config
-│ ├── config.js # Environment variable configuration
 │ └── swaggerConfig.js # Swagger configuration
 ├── connection
 │ └── connect.js # MongoDB connection setup
@@ -73,9 +88,6 @@ plaintext
     DB_URI=mongodb://localhost:27017/your-db-name
     PORT=5000
     JWT_SECRET=your_jwt_secret
-    AWS_ACCESS_KEY_ID=your_aws_access_key
-    AWS_SECRET_ACCESS_KEY=your_aws_secret_key
-    AWS_BUCKET_NAME=your_s3_bucket_name
 
 Running the Application
 nodemon

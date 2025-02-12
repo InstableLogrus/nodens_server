@@ -1,7 +1,6 @@
 import bcryptjs from 'bcryptjs';
 
-import awsHandler from './aws.js';
-import Model from '../Models/Model.js';
+import Model from '../Models/model.ts';
 
 const userSignUp = (req, res, next) => {
   const { name, password, email, imageUrl } = req.body;
@@ -43,15 +42,15 @@ const userSignUp = (req, res, next) => {
 
       // Handle file upload if present, otherwise proceed with the provided imageUrl
       if (req.file) {
-        awsHandler
-          .UploadToAws(req.file)
-          .then((uploadedImage) => {
-            handleUserCreation(uploadedImage);
-          })
-          .catch((err) => {
-            res.status(500);
-            next(new Error(`Image upload failed. ${err}`));
-          });
+        // awsHandler
+        //   .UploadToAws(req.file)
+        //   .then((uploadedImage) => {
+        //     handleUserCreation(uploadedImage);
+        //   })
+        //   .catch((err) => {
+        //     res.status(500);
+        //     next(new Error(`Image upload failed. ${err}`));
+        //   });
       } else {
         handleUserCreation(imageUrl || ''); // Pass imageUrl or an empty string if neither is provided
       }

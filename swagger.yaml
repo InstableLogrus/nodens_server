@@ -1,11 +1,11 @@
 openapi: 3.0.0
 info:
-  title: Node Mongo Boilerplate API
-  description: API documentation for Node Mongo Boilerplate project
+  title: Auth Boilerplate API
+  description: API documentation for Auth Boilerplate project
   version: 1.0.0
 servers:
   - url: http://localhost:5000
-    description: Development server
+    description: Auth server
 paths:
   /api/users/signup:
     post:
