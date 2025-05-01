@@ -1,18 +1,31 @@
 
+# Nodens
 
-# interessant a check
+Gestion de demande d'emploi
 
-https://github.com/dotenvx/dotenvx -> dotenv mais chiffré
+stocke les demandes dans une DB MondoDB (pour changer facilement le schema)
 
 
 # incorporé dans l'API
 
 fausses données: https://github.com/faker-js/faker
-doc: swagger https://swagger.io/
-
-# 
+doc: swagger https://swagger.io/ (a compléter)
 
 
+# TODO
+
+## incorporer dotenvx 
+https://github.com/dotenvx/dotenvx -> dotenv mais chiffré
+
+## liaison linkeding 
+utilisant leur API our un web scraper
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------
 
 # Node.js MongoDB Boilerplate 
 origine --> https://github.com/saniaali224/node-mongo-swagger-awss3-boilerplate
