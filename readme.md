@@ -10,6 +10,9 @@ stocke les demandes dans une DB MondoDB (pour changer facilement le schema)
 
 fausses données: https://github.com/faker-js/faker
 doc: swagger https://swagger.io/ (a compléter)
+logger: morgan
+cli: commander
+
 
 
 # TODO
