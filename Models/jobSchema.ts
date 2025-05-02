@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { Faker, fr_CH, en } from '@faker-js/faker';
-import { genFakeCompany } from './companySchema.js';
+import { genFakeCompany } from './companySchema.ts';
 import { Schema} from 'mongoose';
 
 

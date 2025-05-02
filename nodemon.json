@@ -1,5 +1,0 @@
-{
-
-    "ext":  "[j|t]s",
-    "exec": "ts-node ./index.js"
-  }

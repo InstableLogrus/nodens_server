@@ -10,33 +10,7 @@ const createToken = (user, res, next) => {
         email,
         name,
     };
-    // console.log(payload);
-    // create a token
-    // jwt.sign(
-    //     payload,
-    //     process.env.JWT_SECRET,
-    //     {
-    //         expiresIn: '1d',
-    //     },
-    //     (err, token) => {
-    //         // Error Create the Token
-    //         if (err) {
-    //             res.status(500);
-    //             next(new Error(`Unable to generate Token. ${token}`));
-    //         } else {
-    //             // Token Created
-    //             const refresh = token;
-    //             res.cookie('refresh_token', refresh, {
-    //                 expires: new Date(Date.now() + 48 * 3600000), // cookie will be removed after 48 hours
-    //                 httpOnly: true, // JS can't read it
-    //                 secure: false, // should be true in prod
-    //             })
-    //             res.json({
-    //                 token
-    //             });
-    //         }
-    //     }
-    // );
+
 
     
     const accessToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 60 }); // 60 pour test

@@ -1,50 +1,63 @@
 import mongoose from 'mongoose';
 import { Faker, fr_CH, en } from '@faker-js/faker';
-import { Schema, model} from 'mongoose';
+import { Schema, model, HydratedDocument } from 'mongoose';
 import bcryptjs from 'bcryptjs';
 
-const userSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
+
+interface IUser {
+    name: string;
+    password: string;
+    email: string;
+    userType: string;
+    imageUrl: string;
+}
+
+const userSchema = new Schema<IUser>(
+    {
+        name: {
+            type: String,
+            required: true,
+        },
+        password: {
+            type: String,
+        },
+        email: {
+            type: String,
+        },
+        userType: {
+            type: String,
+            default: 'user',
+        },
+        imageUrl: {
+            type: String,
+            default: '',
+        },
     },
-    password: {
-      type: String,
-    },
-    email: {
-      type: String,
-    },
-    userType: {
-      type: String,
-      default: 'user',
-    },
-    imageUrl: {
-      type: String,
-      default: '',
-    },
-  },
-  {
-    timestamps: true,
-  }
+    {
+        timestamps: true,
+    }
 );
 
-const UserSchema = model('User', userSchema);
+const UserSchema = model<IUser>('User', userSchema);
 
 const faker = new Faker({
-    locale: [fr_CH, en], 
+    locale: [fr_CH, en],
 });
 
 
-const password = faker.internet.password();
-const hashedPassword = await bcryptjs.hash(password, 12)
-const genFakeUser = () => new UserSchema({
-    name: faker.person.fullName(),
-    password: hashedPassword,
-    email:  faker.internet.email(),
-    userType: 'user',
-    imageUrl: '',
-})
+
+
+const genFakeUser = async (password?: string): Promise<[HydratedDocument<IUser>, string]> => {
+    password = password ?? faker.internet.password();
+    const hashedPassword = await bcryptjs.hash(password, 12);
+    return [new UserSchema({
+        name: faker.person.fullName(),
+        password: hashedPassword,
+        email: faker.internet.email(),
+        userType: 'user',
+        imageUrl: '',
+    }), password];
+}
 
 export default UserSchema;
-export {userSchema, genFakeUser};
+export { userSchema, genFakeUser };
