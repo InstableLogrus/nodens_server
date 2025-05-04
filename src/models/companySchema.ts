@@ -11,6 +11,9 @@ const faker = new Faker({
     locale: [fr_CH, en], 
 });
 
+/**
+ * Generate fake company
+ */
 const genFakeCompany = () => new CompanySchema({
     name:  faker.company.name(),
 })

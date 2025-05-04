@@ -46,7 +46,11 @@ const faker = new Faker({
 
 
 
-
+/**
+ * generate a fake user
+ * @param password force a password instead of using a random one
+ * @returns [User : IUser, password: string]
+ */
 const genFakeUser = async (password?: string): Promise<[HydratedDocument<IUser>, string]> => {
     const pwd = password ?? faker.internet.password();
     const hashedPassword = await bcryptjs.hash(pwd, 12);
