@@ -1,3 +1,11 @@
+### get info about one specific user with id
+/job/:id
+ex.
+GET /job/680b8b4b9b74a568594c1502
+
+
+
+
 ### User Signup (with image file upload)
 POST http://localhost:5000/api/users/signup
 Content-Type: multipart/form-data

@@ -28,6 +28,12 @@ https://github.com/dotenvx/dotenvx -> dotenv mais chiffré
 ### liaison linkedin
 utilisant leur API our un web scraper
 
+## scripts
+
+```npm run dev```&emsp;&emsp;serveur de dev (avec reload)  
+```npm start```&emsp;&emsp;&emsp;serveur prod  
+```npm run test```&emsp;&nbsp;série de tests unitaires 
+
 ```text
 .
 ├── src
@@ -38,7 +44,7 @@ utilisant leur API our un web scraper
 │ ├── controller        # Controllers for handling business logic
 │ ├── models            # Mongoose models
 │ ├── routes            # API routes
-│ └── utils             # tools / utils
+│ ├── utils             # tools / utils
 │ ├── swagger.yml       # Swagger documentation in YAML
 │ ├── index.js          # Index file to start the server
 │ └── app.ts            # Main application entry point
