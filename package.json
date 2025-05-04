@@ -83,6 +83,6 @@
     "yamljs": "^0.3.0"
   },
   "bin": {
-    "makefake": "./makefake.ts"
+    "makefake": "./src/cli/makefake.ts"
   }
 }
