@@ -28,31 +28,31 @@ https://github.com/dotenvx/dotenvx -> dotenv mais chiffré
 ### liaison linkedin
 utilisant leur API our un web scraper
 
-
-
 ```text
 .
-├── connection
-│ └── connect.js    # MongoDB connection setup
-├── controller      # Controllers for handling business logic
-├── Models          # Mongoose models
+├── src
+│ ├── connection        # MongoDB connection setup
+│ │ └── connect.js      # Controllers for handling business logic
+│ ├── cli               # all CLI commands
+│ │ └── makefake.ts     # CLI for making test data (linked to command line via "npm link")
+│ ├── controller        # Controllers for handling business logic
+│ ├── models            # Mongoose models
+│ ├── routes            # API routes
+│ └── utils             # tools / utils
+│ ├── swagger.yml       # Swagger documentation in YAML
+│ ├── index.js          # Index file to start the server
+│ └── app.ts            # Main application entry point
 ├── node_modules
-├── Routes          # API routes
-├── tests           # unit test (Jest)
-├── utils           # tools / utils
-├── jest.config.ts  # config for Jest
-├── .env            # Environment variables (gitignored)
-├── .eslintrc.json  # ESLint configuration
-├── .gitignore      # Files and directories to ignore in Git
-├── .prettierrc     # Prettier configuration
-├── env-sample      # Sample environment file
-├── api.http        # HTTP requests for testing
-├── app.ts          # Main application entry point
-├── makefake.ts     # CLI for making test data (linked to command line via "npm link")
-├── index.js        # Index file to start the server
-├── package.json    # Project dependencies and scripts
-├── tsconfig        # config for Typescript
-└── swagger.yml     # Swagger documentation in YAML
+├── tests               # unit test (Jest)
+├── jest.config.ts      # config for Jest
+├── .env                # Environment variables (gitignored)
+├── .eslintrc.json      # ESLint configuration
+├── .gitignore          # Files and directories to ignore in Git
+├── .prettierrc         # Prettier configuration
+├── env-sample          # Sample environment file
+├── api.http            # HTTP requests for testing
+├── package.json        # Project dependencies and scripts
+├── tsconfig.json       # config for Typescript
 ```
 
 

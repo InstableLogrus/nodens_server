@@ -1,8 +1,8 @@
 // import { json } from 'stream/consumers';
 import bcryptjs from 'bcryptjs';
 
-import UserSchema from '../src/Models/userSchema.ts';
-import Model from '../src/Models/model.ts';
+import UserSchema from '../src/models/userSchema.ts';
+import Model from '../src/models/model.ts';
 import Connect from "../src/connection/connect.ts";
 import mongoose,  { Connection } from 'mongoose';
 import { promises } from 'dns';

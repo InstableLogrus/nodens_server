@@ -1,6 +1,6 @@
 
 import {RequestHandler,  Request, Response, NextFunction } from 'express';
-import Model from '../Models/model.ts';
+import Model from '../models/model.ts';
 
 
 // give job list (array of obj)

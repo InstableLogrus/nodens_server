@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import Model from '../Models/model.ts';
+import Model from '../models/model.ts';
 
 const userInfo = (req, res, next) => {
     const { email, password } = req.body;

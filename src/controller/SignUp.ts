@@ -1,6 +1,6 @@
 import bcryptjs from 'bcryptjs';
 
-import Model from '../Models/model.ts';
+import Model from '../models/model.ts';
 
 const userSignUp = (req, res, next) => {
   const { name, password, email, imageUrl } = req.body;

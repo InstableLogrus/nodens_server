@@ -7,7 +7,7 @@ import cookieParser from 'cookie-parser'; // get cookir from request
 
 
 import Connect from './connection/connect.ts'; // Import the Connect function
-import Router from './Routes/Router.ts';
+import Router from './routes/router.ts';
 import setupSwagger from './swaggerConfig.js';
 
 const app = express();
