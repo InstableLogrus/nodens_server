@@ -1,9 +1,9 @@
 #!/usr/bin/env -S npx tsx
 // https://github.com/TypeStrong/ts-node/issues/639#issuecomment-538984217
 
-import {genFakeUser} from "./Models/userSchema.ts"
+import {genFakeUser} from "./src/Models/userSchema.ts"
 import { program, Command, Option } from '@commander-js/extra-typings';
-import Connect from "./connection/connect.js";
+import Connect from "./src/connection/connect.ts";
 import { env } from "process";
 
 const handler = async (env:any, options:any) =>{
