@@ -48,15 +48,15 @@ const faker = new Faker({
 
 
 const genFakeUser = async (password?: string): Promise<[HydratedDocument<IUser>, string]> => {
-    password = password ?? faker.internet.password();
-    const hashedPassword = await bcryptjs.hash(password, 12);
+    const pwd = password ?? faker.internet.password();
+    const hashedPassword = await bcryptjs.hash(pwd, 12);
     return [new UserSchema({
         name: faker.person.fullName(),
         password: hashedPassword,
         email: faker.internet.email(),
         userType: 'user',
         imageUrl: '',
-    }), password];
+    }), pwd];
 }
 
 export default UserSchema;
