@@ -10,7 +10,7 @@ const handler = async (env:any, options:any) =>{
     // temp hardcoded -> @todo: let choose the model
     console.log("generating new User !");
     const [newUser, userPassword]  = await genFakeUser(options.password);
-    newUser.save();
+    await newUser.save();
     console.log(`Created user "${newUser.name}" "${newUser.email}" with password "${userPassword}".`);
 }
 
