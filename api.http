@@ -1,68 +1,80 @@
+
+
+## auth
+// note: should use GET for refresh, signup but easier for testing
+
+### login
+POST /auth/login
+content-type: application/json
+ex.
+POST /auth/login
+-- content
+{
+    "email": "test@example.com",
+    "password": "motdepasse"
+}
+
+### signup
+POST /auth/signup
+content-type: none
+authorization: Bearer
+ex.
+
+
+### refresh token
+POST /auth/refresh
+content-type: none
+cookie(ssl): refreshToken
+ex.
+POST /auth/refresh
+content:
+sslcookie: "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODE3YWE4MmY3MWY0ZmZjNTA5ZWJlOWUiLCJlbWFpbCI6Ik5heWxhX0JlcnNldEBob3RtYWlsLmNvbSIsIm5hbWUiOiJFbnlhIFJvY2hhdCIsImlhdCI6MTc0NjUyMjY1OCwiZXhwIjoxNzQ2NTIyNzE4fQ.ADiaWaneJXmVkOshgoEfYLfHDbv90qXqHCX-MiVbEKU"
+
+
+
+## jobs
+
 ### get info about one specific user with id
-/job/:id
+GET /job/:id
+content-type: none
+Authorization: Bearer {{token}}
 ex.
 GET /job/680b8b4b9b74a568594c1502
 
-
-
-
-### User Signup (with image file upload)
-POST http://localhost:5000/api/users/signup
-Content-Type: multipart/form-data
-
---boundary
-Content-Disposition: form-data; name="name"
-
-John Doe
---boundary
-Content-Disposition: form-data; name="email"
-
-john@example.com
---boundary
-Content-Disposition: form-data; name="password"
-
-secret123
---boundary
-Content-Disposition: form-data; name="imageUrl"
-
-https://example.com/image.jpg
---boundary
-Content-Disposition: form-data; name="file"; filename="profile.jpg"
-Content-Type: image/jpeg
-
-< ./path/to/your/profile.jpg
---boundary--
-
-### User Signup (without image file upload, using imageUrl)
-POST http://localhost:5000/api/users/signup
-Content-Type: application/json
-
+### create a new job
+POST /job/
+content-type: application/json
+ex.
+POST /job/
+-- content
 {
-    "name": "Jane Doe",
-    "email": "jane@example.com",
-    "password": "secret123",
-    "imageUrl": "https://example.com/image.jpg"
+    "jobTitle": "test pas encore modifié",
+    "language": "FR",
+    "link": "https://example.com",
+    "source": "linkedin"
 }
 
-### User Signup (without image)
-POST http://localhost:5000/api/users/signup
-Content-Type: application/json
-
+### modify a job
+PUT /job/
+content-type: application/json
+Authorization: Bearer {{token}}
+ex.
+PUT /job/
+-- content
 {
-    "name": "Bob Smith",
-    "email": "bob@example.com",
-    "password": "secret123"
+    "_id": "680b8b4b9b74a568594c1502",
+    "jobTitle": "test modifié une fois",
+    "language": "FR",
+    "link": "https://example.com",
+    "source": "linkedin"
 }
 
-### User Login
-POST http://localhost:5000/api/users/login
-Content-Type: application/json
+### delete a job
+DELETE /job/:id
+content-type: none
+Authorization: Bearer {{token}}
+ex.
+DELETE /job/:680b8b4b9b74a568594c1502
 
-{
-    "email": "john@example.com",
-    "password": "secret123"
-}
 
-# ### Get User Details (Requires JWT token)
-# GET http://localhost:5000/api/users/me
-# Authorization: Bearer {{token}}
+
