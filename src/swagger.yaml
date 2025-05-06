@@ -228,7 +228,7 @@ paths:
                 '500':
                     description: Server error
 
-    /job/:{jobId}:
+    /job/{jobId}:
         get:
             summary: Get one job
             tags:
