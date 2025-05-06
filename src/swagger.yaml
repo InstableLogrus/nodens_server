@@ -18,7 +18,7 @@ components:
             in: cookie
             name: refreshToken
 paths:
-    /api/users/signup:
+    /auth/signup:
         post:
             summary: Register a new user (require auth as manager min)
             tags:
@@ -114,3 +114,189 @@ paths:
                     description: Refresh failed, no access
                 '500':
                     description: Server error
+
+    /job:
+        get:
+            summary: Get the job list
+            tags:
+                - Jobs
+            security:
+                - bearerAuth: []
+            responses:
+                '200':
+                    description: get list
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                    properties:
+                                        _id:
+                                            type: string
+                                        jobTitle:
+                                            type: string
+                                        language:
+                                            type: string
+                                        company:
+                                            type: string
+                                        link:
+                                            type: string
+                                        source:
+                                            type: string
+                                        user:
+                                            type: string
+                '401': 
+                    description: Unauthorized, need access token
+                '403':
+                    description: Cannot access to the resource with current access level
+                '500':
+                    description: Server error
+
+        post:
+            summary: create a job
+            tags:
+                - Jobs
+            security:
+                - bearerAuth: []
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                jobTitle:
+                                    type: string
+                                language:
+                                    type: string
+                                company:
+                                    type: string
+                                link:
+                                    type: string
+                                source:
+                                    type: string
+            responses:
+                '200':
+                    description: Job succefully created
+                '400': 
+                    description: Malformed request
+                '401': 
+                    description: Unauthorized, need access token
+                '403':
+                    description: Cannot access to the resource with current access level
+                '500':
+                    description: Server error
+
+        put:
+            summary: Modify a job
+            tags:
+                - Jobs
+            security:
+                - bearerAuth: []
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                _id:
+                                    type: string
+                                jobTitle:
+                                    type: string
+                                language:
+                                    type: string
+                                company:
+                                    type: string
+                                link:
+                                    type: string
+                                source:
+                                    type: string
+                            required:
+                                - _id
+                                
+            responses:
+                '200':
+                    description: Job succefully modified
+                '400': 
+                    description: Malformed request
+                '401': 
+                    description: Unauthorized, need access token
+                '403':
+                    description: Cannot access to the resource with current access level
+                '500':
+                    description: Server error
+
+    /job/:{jobId}:
+        get:
+            summary: Get one job
+            tags:
+                - Jobs
+            security:
+                - bearerAuth: []
+            parameters:
+                - in: path
+                  name: jobId
+                  schema:
+                    type: string
+                  required: true
+                  description: id of the job
+            responses:
+                '200':
+                    description: get the job
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    _id:
+                                        type: string
+                                    jobTitle:
+                                        type: string
+                                    language:
+                                        type: string
+                                    company:
+                                        type: string
+                                    link:
+                                        type: string
+                                    source:
+                                        type: string
+                                    user:
+                                        type: string
+                
+                '401': 
+                    description: Unauthorized, need access token
+                '403':
+                    description: Cannot access to the resource with current access level
+                '404':
+                    description: job not found with this id (or with user access)
+                '500':
+                    description: Server error   
+
+        delete:
+            summary: Delete a job
+            tags:
+                - Jobs
+            security:
+                - bearerAuth: []
+            parameters:
+                - in: path
+                  name: jobId
+                  schema:
+                    type: string
+                  required: true
+                  description: id of the job
+            responses:
+                '200':
+                    description: Job succesfully deleted
+                '401': 
+                    description: Unauthorized, need access token
+                '403':
+                    description: Cannot access to the resource with current access level
+                '404':
+                    description: job not found with this id (or with user access)
+                '500':
+                    description: Server error   
+
+            
