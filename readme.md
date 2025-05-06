@@ -10,7 +10,7 @@ La sécurité et l'authentification des utilisateurs se fait via jeton JWT
 
 ## Incorporé dans l'API
 
-authentification: JWT 
+authentification: JWT  
 fausses données: https://github.com/faker-js/faker  
 doc: swagger https://swagger.io/ (a compléter)  
 logger: morgan  
