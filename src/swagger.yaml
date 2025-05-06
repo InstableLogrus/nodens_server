@@ -1,36 +1,116 @@
 openapi: 3.0.0
 info:
-  title: Auth Boilerplate API
-  description: API documentation for Auth Boilerplate project
-  version: 1.0.0
+    title: Auth Boilerplate API
+    description: API documentation for Auth Boilerplate project
+    version: 1.0.0
 servers:
-  - url: http://localhost:5000
-    description: Auth server
+    - url: http://localhost:5000
+      description: Auth server
+components:
+    securitySchemes:
+        bearerAuth:
+            type: http
+            scheme: bearer
+            bearerFormat: JWT
+
+        cookieRefresh:
+            type: apiKey
+            in: cookie
+            name: refreshToken
 paths:
-  /api/users/signup:
-    post:
-      summary: Register a new user
-      tags:
-        - Users
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                email:
-                  type: string
-                password:
-                  type: string
-                imageUrl:
-                  type: string
-      responses:
-        '200':
-          description: User registered successfully
-        '400':
-          description: Email already taken
-        '500':
-          description: Server error
+    /api/users/signup:
+        post:
+            summary: Register a new user (require auth as manager min)
+            tags:
+                - Users
+            security:
+                - bearerAuth: []
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                email:
+                                    type: string
+                                password:
+                                    type: string
+                                imageUrl:
+                                    type: string
+            responses:
+                '200':
+                    description: User registered successfully
+                '400':
+                    description: Email already taken
+                '500':
+                    description: Server error
+
+    /auth/login:
+        post:
+            summary: login with credentials
+            tags:
+                - Users
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                password:
+                                    type: string
+            responses:
+                '200':
+                    description: Authentification successful
+                    headers:
+                        Set-Cookie:
+                            schema:
+                                type: string
+                                example: refreshToken=abcde12345; Path=/; HttpOnly
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    accessToken:
+                                        type: string
+                    
+                '400':
+                    description: No user with this credential or password invalid
+                '500':
+                    description: Server error
+
+    /auth/refresh:
+        post:
+            summary: Try to refresh access token with the refresh token
+            tags:
+                - Users
+            security:
+                - cookieRefresh: []
+
+            responses:
+                '200':
+                    description: Refresh successful
+                    headers:
+                        Set-Cookie:
+                            schema:
+                                type: string
+                                example: refreshToken=abcde12345; Path=/; HttpOnly
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    accessToken:
+                                        type: string
+                '401':
+                    description: No refresh token
+                '403':
+                    description: Refresh failed, no access
+                '500':
+                    description: Server error
