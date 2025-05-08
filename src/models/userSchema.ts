@@ -64,4 +64,4 @@ const genFakeUser = async (password?: string): Promise<[HydratedDocument<IUser>,
 }
 
 export default UserSchema;
-export { userSchema, genFakeUser };
+export { userSchema, genFakeUser, IUser };

@@ -1,17 +1,12 @@
 import jwt from 'jsonwebtoken';
-import Model from '../models/model.ts';
+import {RequestHandler,  Request, Response, NextFunction } from 'express';
 
-const userInfo = (req, res, next) => {
-    const { email, password } = req.body;
+const userInfo = (req: Request, res: Response, next: NextFunction) => {
     const { authorization } = req.headers;
-    const token = authorization && authorization.split(' ')[1];
-    console.log("userinfo: ", email, password, token);
+    const token : string = authorization ? authorization.split(' ')[1] : "";
         
     const decoded = jwt.decode(token)
-    console.log("decoded:", decoded);
-    
-    // });
-    // next();
+
     res.json(decoded);
 
 

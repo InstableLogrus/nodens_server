@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken';
+import {RequestHandler,  Request, Response, NextFunction } from 'express';
 
 // refresh access token (make a new access token and anoth refresh token with the same expiration)
-const userRefresh = (req, res, next) => {
+const userRefresh = (req: Request, res: Response, next: NextFunction) => {
     const refreshToken = req.cookies.refreshToken;
     // const { refreshToken } = req.body;
 

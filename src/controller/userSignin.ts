@@ -1,28 +1,34 @@
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import {RequestHandler,  Request, Response, NextFunction } from 'express';
 
 import Model from '../models/model.ts';
 
-const createToken = (user, res, next) => {
+
+/**
+ * create a new JWT token from user information and send it back to client
+ *  generate a response JSON {accessToken} and a secure cookie {refreshToken}
+ * @param user Object {id:string, email:string, name:string}
+ * @param res 
+ * @param next 
+ */
+const createToken = (user : any, res: Response, next: NextFunction) => {
     const { id, email, name } = user;
     const payload = {
         _id: id,
         email,
         name,
     };
-
-
-    
+   
     const accessToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 60 }); // 60 pour test
     const refreshToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1w' });
 
     // refresh token as httponly cookie 
     res.cookie('refreshToken', refreshToken, {
-        expires: new Date(Date.now() + 7 * 24 * 3600000), // cookie will be removed after 7*24 hours
+        expires: new Date(Date.now() + 7 * 24 * 3600000), // cookie will be removed after 7*24 hours @TODO: should match with the JWT timing
         httpOnly: true, // JS can't read it
         secure: false, // should be true in prod
         // secure = only send cookie over https
-        secure: false,
         // sameSite = only send cookie if the request is coming from the same origin
         sameSite: "lax", // "strict" | "lax" | "none" (secure must be true)
     })
@@ -34,7 +40,8 @@ const createToken = (user, res, next) => {
 
 };
 
-const userSignIn = (req, res, next) => {
+// signin handler for router
+const userSignIn = (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
     // Find user with the passed email
     Model.UserModel.findOne({ email }).then((user) => {

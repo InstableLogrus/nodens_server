@@ -1,10 +1,9 @@
 import jwt from 'jsonwebtoken';
+import {RequestHandler,  Request, Response, NextFunction } from 'express';
 
 
-
-function authenticateToken(req, res, next) {
+function authenticateToken(req: Request, res: Response, next: NextFunction) {
     const authHeader = req.headers['authorization']
-    // const token = authHeader
     const token = authHeader && authHeader.split(' ')[1]
 
 
@@ -48,21 +47,21 @@ function authenticateToken(req, res, next) {
     });
 }
 
-function generateTokens(req, res, next) {
-    const access_token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 60 }); // 60 pour test
-    const refresh_token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1w' });
+// function generateTokens(req: Request, res: Response, next: NextFunction) {
+//     const access_token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 60 }); // 60 pour test
+//     const refresh_token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1w' });
     
-    // refresh token as httponly cookie 
-    res.cookie('refresh_token', refresh_token, {
-        expires: new Date(Date.now() + 48 * 3600000), // cookie will be removed after 48 hours
-        httpOnly: true, // JS can't read it
-        secure: false, // should be true in prod
-    })
+//     // refresh token as httponly cookie 
+//     res.cookie('refresh_token', refresh_token, {
+//         expires: new Date(Date.now() + 48 * 3600000), // cookie will be removed after 48 hours
+//         httpOnly: true, // JS can't read it
+//         secure: false, // should be true in prod
+//     })
 
-    // access token as json for app to access it (easier for debug)
-    res.json({
-        access_token
-    });
-}
+//     // access token as json for app to access it (easier for debug)
+//     res.json({
+//         access_token
+//     });
+// }
 
 export default { authenticateToken };
