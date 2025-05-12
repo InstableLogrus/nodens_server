@@ -122,6 +122,26 @@ paths:
                 - Jobs
             security:
                 - bearerAuth: []
+            parameters:
+                - in: path
+                  name: limit
+                  schema: 
+                    type: integer
+                  required: false
+                  description: number of records to be fetched (0 for all)
+                - in: path
+                  name: offset
+                  schema:
+                    type: integer
+                  required: false
+                  description: number of record to skip
+                - in: path
+                  name: filter
+                  schema:
+                    type: string
+                    example: filter[jobtitle]=texteatrouver
+                  required: false
+                  description: filter, can use several fields between brackets -> filter[jobTitle]=text&filter[company]=companyname
             responses:
                 '200':
                     description: get list
@@ -132,7 +152,7 @@ paths:
                                 items:
                                     type: object
                                     properties:
-                                        _id:
+                                        id:
                                             type: string
                                         jobTitle:
                                             type: string
@@ -201,7 +221,7 @@ paths:
                         schema:
                             type: object
                             properties:
-                                _id:
+                                id:
                                     type: string
                                 jobTitle:
                                     type: string
@@ -214,7 +234,7 @@ paths:
                                 source:
                                     type: string
                             required:
-                                - _id
+                                - id
                                 
             responses:
                 '200':
@@ -250,7 +270,7 @@ paths:
                             schema:
                                 type: object
                                 properties:
-                                    _id:
+                                    id:
                                         type: string
                                     jobTitle:
                                         type: string
