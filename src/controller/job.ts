@@ -3,9 +3,34 @@ import {RequestHandler,  Request, Response, NextFunction } from 'express';
 import Model from '../models/model.ts';
 
 
+// allowed filters and case conversion
+const ALLOWED_FILTERS: Record<string, string> = {
+    jobtitle: 'jobTitle',
+    language: 'language',
+    source:  'source',
+    status: 'status',
+}
+// only filter keys (faster)
+const ALLOWED_FILTERS_KEYS = Object.keys(ALLOWED_FILTERS);
+
 // give job list (array of obj)
 const jobList: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-    const docs = await Model.JobModel.find({});
+
+    const limit = +(req.query.limit ?? 0);
+    const filters = req.query.filter ?? {};
+    const offset = +(req.query.offset ?? 0);
+
+    // filter and convert key from params (which can be lowercase)
+    const parsedFilters = Object
+        .keys(filters)
+        .filter(k=>ALLOWED_FILTERS_KEYS.includes(k))
+        .reduce((a:Object, v:string ) => ({ ...a, [ALLOWED_FILTERS[v]]:  { "$regex": filters[v], "$options": "i" } } ), {});
+
+    const docs = await Model.JobModel
+        .find(parsedFilters)
+        .skip(offset)
+        .limit(limit);
+
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(docs));
 }

@@ -4,7 +4,7 @@ import express from 'express';
 import helmet from 'helmet'; // set HTTP response
 import morgan from 'morgan'; // request logger
 import cookieParser from 'cookie-parser'; // get cookir from request
-
+import qs from 'qs'
 
 import Connect from './connection/connect.ts'; // Import the Connect function
 import Router from './routes/router.ts';
@@ -13,6 +13,12 @@ import setupSwagger from './swaggerConfig.js';
 const app = express();
 // Setup Swagger documentation
 setupSwagger(app);
+
+// query string parser qs
+app.set('query parser', function (str:string) {
+  return qs.parse(str, { /* custom options */ })
+})
+
 // Initialize MongoDB connection
 Connect();
 // app.use(cors());
