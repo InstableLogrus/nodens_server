@@ -22,6 +22,13 @@ import { userInfo } from 'os';
 //     source: {type: String, required: false}, 
 // })
 
+const ApplicationStatusEnum = {
+    values: [
+        'NONE', 'READ', 'CONSIDERED', 'SENT', 'ACCEPTED', 'REFUSED'
+    ],
+    message: 'enum validator failed for path `{PATH}` with value `{VALUE}`' 
+}
+
 /**
  * Model for Job entry -> need to be linked to an existing user
  */
@@ -32,6 +39,7 @@ const jobSchema = new Schema({
     link: {type: String, required: true}, 
     source: {type: String, required: false}, 
     user: {type: Schema.Types.ObjectId, ref: 'User', required: true},
+    status: {type: String, enum: ApplicationStatusEnum, default: 'NONE'}
 })
 
 const JobSchema = mongoose.model('Job', jobSchema);
@@ -48,6 +56,7 @@ const genFakeJob = (userid: string) => new JobSchema({
     link: faker.internet.url(),
     source: faker.lorem.words(3),
     user: userid, 
+    status: faker.helpers.arrayElement(ApplicationStatusEnum.values), 
 })
 
 export default JobSchema;
