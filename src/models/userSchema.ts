@@ -1,10 +1,11 @@
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 import { Faker, fr_CH, en } from '@faker-js/faker';
 import { Schema, model, HydratedDocument } from 'mongoose';
 import bcryptjs from 'bcryptjs';
 
 
 interface IUser {
+    _id: Types.ObjectId;
     name: string;
     password: string;
     email: string;
@@ -35,6 +36,12 @@ const userSchema = new Schema<IUser>(
     },
     {
         timestamps: true,
+        toJSON: {
+            transform(doc: IUser, ret: any) {
+                delete ret._id; // no id for client -> use email for id
+                delete ret.password; // no password for client
+            }
+        }
     }
 );
 

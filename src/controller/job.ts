@@ -51,8 +51,8 @@ const createJob : RequestHandler = async (req: Request, res: Response, next: Nex
 // update the job with the json data -> should have a _id field with a valid id
 const updateJob : RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const {_id, ...change} = req.body;
-        const query = await Model.JobModel.updateOne({ _id }, change);
+        const {id, ...change} = req.body;
+        const query = await Model.JobModel.updateOne({ _id: id }, change);
         const count = query.matchedCount; // Number of documents matched
         const modified = query.modifiedCount; // Number of documents modified
         res.status(200);

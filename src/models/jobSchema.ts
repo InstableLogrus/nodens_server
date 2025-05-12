@@ -1,18 +1,27 @@
 import mongoose from 'mongoose';
 import { Faker, fr_CH, en } from '@faker-js/faker';
 import { genFakeCompany } from './companySchema.ts';
-import { Schema} from 'mongoose';
+import { Schema, Types} from 'mongoose';
 import { genFakeUser } from './userSchema.ts';
 import { userInfo } from 'os';
 
+const ApplicationStatusEnum = {
+    values: [
+        'NONE', 'READ', 'CONSIDERED', 'SENT', 'ACCEPTED', 'REFUSED'
+    ],
+    message: 'enum validator failed for path `{PATH}` with value `{VALUE}`' 
+}
 
-// interface IJob {
-//     jobTitle: string;
-//     language: string;
-//     company: Types.ObjectId;
-//     link: string;
-//     source: string;
-// }
+interface IJob {
+    _id: Types.ObjectId;
+    jobTitle: string;
+    language: string;
+    company: Types.ObjectId;
+    link: string;
+    source: string;
+    user: Types.ObjectId;
+    status: string;
+}
 
 // const jobSchema = new Schema<IJob>({
 //     jobTitle: {type: String, required: true}, 
@@ -22,12 +31,6 @@ import { userInfo } from 'os';
 //     source: {type: String, required: false}, 
 // })
 
-const ApplicationStatusEnum = {
-    values: [
-        'NONE', 'READ', 'CONSIDERED', 'SENT', 'ACCEPTED', 'REFUSED'
-    ],
-    message: 'enum validator failed for path `{PATH}` with value `{VALUE}`' 
-}
 
 /**
  * Model for Job entry -> need to be linked to an existing user
@@ -40,6 +43,13 @@ const jobSchema = new Schema({
     source: {type: String, required: false}, 
     user: {type: Schema.Types.ObjectId, ref: 'User', required: true},
     status: {type: String, enum: ApplicationStatusEnum, default: 'NONE'}
+}, {
+    toJSON: {
+        transform(doc: IJob, ret: any) {
+            ret.id = doc._id; // don't expose _id directly to client
+            delete ret._id;
+        }
+    }
 })
 
 const JobSchema = mongoose.model('Job', jobSchema);
