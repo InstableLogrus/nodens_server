@@ -8,13 +8,17 @@ import { verifyEncryptedToken } from '../utils/jwt_tools.ts';
 
 
 
-
+/**
+ * Auth middeware using JWE token to authorize access on some content
+ * 
+ * note : to pass info to downstream handler -> https://stackoverflow.com/a/71126179/30231852
+ */
 const authenticateToken = async(req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
 
 
-    console.log("token: ", token, process.env.JWT_SECRET);
+    // console.log("token: ", token, process.env.JWT_SECRET);
     if (token == null || token == 'Invalid') return res.sendStatus(401)
 
     try {
