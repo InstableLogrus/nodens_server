@@ -14,6 +14,7 @@ const ALLOWED_FILTERS: Record<string, string> = {
 const ALLOWED_FILTERS_KEYS = Object.keys(ALLOWED_FILTERS);
 
 // give job list (array of obj)
+// @TODO: retrieve only for current user (more if manager)
 const jobList: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
 
     const limit = +(req.query.limit ?? 0);
@@ -36,6 +37,7 @@ const jobList: RequestHandler = async (req: Request, res: Response, next: NextFu
 }
 
 // create a job with the given json
+// @todo: linking to the current user
 const createJob : RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const obj = await Model.JobModel.create(req.body);
@@ -49,6 +51,7 @@ const createJob : RequestHandler = async (req: Request, res: Response, next: Nex
 }
 
 // update the job with the json data -> should have a _id field with a valid id
+// @todo: if not current user (or manager) -> no update authorized
 const updateJob : RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const {id, ...change} = req.body;
@@ -68,6 +71,7 @@ const updateJob : RequestHandler = async (req: Request, res: Response, next: Nex
 }
 
 // delete a job awith the corresponding id
+// @TODO: only if a current user job (or manager doing it)
 const deleteJob  = async (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id;
     const job = await Model.JobModel.findById(id);

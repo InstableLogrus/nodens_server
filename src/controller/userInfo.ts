@@ -5,9 +5,14 @@ const userInfo = (req: Request, res: Response, next: NextFunction) => {
     const { authorization } = req.headers;
     const token : string = authorization ? authorization.split(' ')[1] : "";
         
-    const decoded = jwt.decode(token)
+    const { email, name, roles } = req.user;
+    const user = {email, name, roles};
 
-    res.json(decoded);
+    // console.log("user: ", user);
+
+    // const decoded = jwt.decode(token)
+
+    res.json(user);
 
 
 }

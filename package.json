@@ -70,6 +70,7 @@
     "express": "^5.1.0",
     "helmet": "^8.1.0",
     "http-status": "^2.1.0",
+    "jose": "^6.0.11",
     "js-yaml": "^4.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.16.0",
@@ -85,6 +86,7 @@
     "yamljs": "^0.3.0"
   },
   "bin": {
-    "makefake": "./src/cli/makefake.ts"
+    "makefake": "./src/cli/makefake.ts",
+    "jwt-util": "./src/cli/jwt-util.ts"
   }
 }
