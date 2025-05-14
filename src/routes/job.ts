@@ -9,10 +9,10 @@ const AuthRouter : Router  = Router();
 // AuthRouter.use('/jobs', jwtAuth.authenticateToken);
 
 AuthRouter
-.get('/', jobList)
-.get('/:id', jobInfo)
-.post('/', createJob)
-.put('/', updateJob)
-.delete('/:id', deleteJob);
+.get('/', jwtAuth.authenticateToken, jobList)
+.get('/:id', jwtAuth.authenticateToken, jobInfo)
+.post('/', jwtAuth.authenticateToken, createJob)
+.put('/', jwtAuth.authenticateToken, updateJob)
+.delete('/:id', jwtAuth.authenticateToken, deleteJob);
 
 export default AuthRouter;

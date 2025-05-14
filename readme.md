@@ -52,6 +52,7 @@ utilisant leur API our un web scraper
 ├── jest.config.ts        # Config Jest
 ├── package.json          # Project dependencies and scripts
 ├── readme.md             # this file
+├── @types                # custom types
 ├── src
 │   ├── app.ts            # App entry point
 │   ├── cli               # All CLI commands
