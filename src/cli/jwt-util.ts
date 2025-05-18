@@ -5,6 +5,14 @@ import { createEncryptedToken, verifyEncryptedToken } from '../utils/jwt_tools.t
 import {access, promises as fs} from 'node:fs';
 import dotenv from 'dotenv';
 
+
+const title = ` _______             .___                    
+ \\      \\   ____   __| _/____   ____   ______
+ /   |   \\ /  _ \\ / __ |/ __ \\ /    \\ /  ___/
+/    |    (  <_> ) /_/ \\  ___/|   |  \\\\___ \\ 
+\\____|__  /\\____/\\____ |\\___  >___|  /____  >
+        \\/            \\/    \\/     \\/     \\/ `
+
 /**
  * create a token from a payload JSON file with secret from .env
  * @param payloadPath path to the payload file (json)
@@ -88,7 +96,7 @@ async function main() {
     program
         .name("jwt-utils")
         .version("0.0.1")
-        .description("manage JWT keys")
+        .description("\x1b[32m" + title + "\x1b[0m" + "\nmanage JWT keys" )
 
     program.command('create')
         .description("Create a new JWE token ex: 'jwt-util create -e 3h local/token_payload.json'")
