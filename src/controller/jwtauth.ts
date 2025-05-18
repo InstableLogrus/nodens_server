@@ -15,11 +15,11 @@ import { verifyEncryptedToken } from '../utils/jwt_tools.ts';
  */
 const authenticateToken = async (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers['authorization']
-    const token = authHeader && authHeader.split(' ')[1]
+    const token :string = authHeader ? authHeader.split(' ')[1] : 'invalid';
 
     // console.log("token: ", token, process.env.JWT_SECRET);
 
-    if (token == null || token == 'Invalid') res.sendStatus(401)
+    if (token == 'Invalid') res.sendStatus(401)
 
     try {
         const { payload, protectedHeader } = await verifyEncryptedToken(token, process.env.JWT_SECRET);
