@@ -19,7 +19,8 @@ jest: unit test -> jest with ts https://stackoverflow.com/a/64223627/30231852
 
 ## CLI
 makefake: créer des données de test directement dans la DB
-    pour l'instant utilisateurs
+    pour l'instant utilisateurs  
+jwt-utils: création, vérification et (TODO) reset of the secret
 
 
 
@@ -44,6 +45,7 @@ utilisant leur API our un web scraper
 ├── .eslintrc.json
 ├── .gitignore
 ├── .prettierrc
+├── @types                # custom types
 ├── api.http              # HTTP requests for testing (TODO)
 ├── auth_server.md        # JWT auth doc
 ├── babel.config.json
@@ -52,7 +54,6 @@ utilisant leur API our un web scraper
 ├── jest.config.ts        # Config Jest
 ├── package.json          # Project dependencies and scripts
 ├── readme.md             # this file
-├── @types                # custom types
 ├── src
 │   ├── app.ts            # App entry point
 │   ├── cli               # All CLI commands
