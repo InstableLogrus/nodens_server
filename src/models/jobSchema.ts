@@ -12,6 +12,8 @@ const ApplicationStatusEnum = {
     message: 'enum validator failed for path `{PATH}` with value `{VALUE}`' 
 }
 
+const Languages = ["en", "fr"];
+
 interface IJob {
     _id: Types.ObjectId;
     jobTitle: string;
@@ -63,7 +65,7 @@ const faker = new Faker({
 // generate fake job -> must pass user id 
 const genFakeJob = (userid: string) => new JobSchema({
     jobTitle: faker.person.jobTitle(),
-    language: faker.location.language().alpha2,
+    language: faker.helpers.arrayElement(Languages),
     // company:  genFakeCompany()._id,
     company: faker.company.name(),
     link: faker.internet.url(),
