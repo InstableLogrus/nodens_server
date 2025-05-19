@@ -16,7 +16,8 @@ interface IJob {
     _id: Types.ObjectId;
     jobTitle: string;
     language: string;
-    company: Types.ObjectId;
+    // company: Types.ObjectId;
+    company: string,
     link: string;
     source: string;
     user: Types.ObjectId;
@@ -38,7 +39,8 @@ interface IJob {
 const jobSchema = new Schema({
     jobTitle: {type: String, required: true}, 
     language: {type: String, required: false}, 
-    company: {type: Schema.Types.ObjectId, ref: 'Company', required: false},
+    // company: {type: Schema.Types.ObjectId, ref: 'Company', required: false},
+    company: {type: String, required: true},
     link: {type: String, required: true}, 
     source: {type: String, required: false}, 
     user: {type: Schema.Types.ObjectId, ref: 'User', required: true},
@@ -61,11 +63,12 @@ const faker = new Faker({
 // generate fake job -> must pass user id 
 const genFakeJob = (userid: string) => new JobSchema({
     jobTitle: faker.person.jobTitle(),
-    language: faker.location.language(),
-    company:  genFakeCompany()._id,
+    language: faker.location.language().alpha2,
+    // company:  genFakeCompany()._id,
+    company: faker.company.name(),
     link: faker.internet.url(),
     source: faker.lorem.words(3),
-    user: userid, 
+    user: new Types.ObjectId(userid), 
     status: faker.helpers.arrayElement(ApplicationStatusEnum.values), 
 })
 

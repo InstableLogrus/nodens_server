@@ -1,6 +1,7 @@
 
 import {RequestHandler,  Request, Response, NextFunction } from 'express';
 import Model from '../models/model.ts';
+import { companySchema } from '../models/companySchema.ts';
 
 
 // allowed filters and case conversion
@@ -9,6 +10,7 @@ const ALLOWED_FILTERS: Record<string, string> = {
     language: 'language',
     source:  'source',
     status: 'status',
+    company: 'company',
 }
 // only filter keys (faster)
 const ALLOWED_FILTERS_KEYS = Object.keys(ALLOWED_FILTERS);
@@ -26,6 +28,8 @@ const jobList: RequestHandler = async (req: Request, res: Response, next: NextFu
         .keys(filters)
         .filter(k=>ALLOWED_FILTERS_KEYS.includes(k))
         .reduce((a:Object, v:string ) => ({ ...a, [ALLOWED_FILTERS[v]]:  { "$regex": filters[v], "$options": "i" } } ), {});
+
+    console.log("parsed query: ", parsedFilters);
 
     const docs = await Model.JobModel
         .find(parsedFilters)
