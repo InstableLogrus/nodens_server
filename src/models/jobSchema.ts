@@ -35,6 +35,11 @@ interface IJob {
 // })
 
 
+/*
+    Create index for text search in multiple fields https://stackoverflow.com/a/35843354/30231852
+
+ */
+
 /**
  * Model for Job entry -> need to be linked to an existing user
  */
@@ -55,6 +60,8 @@ const jobSchema = new Schema({
         }
     }
 })
+// multifields index for company, jobTitle and status
+jobSchema.index({jobTitle: 'text', company: 'text', status: 'text'}, {name: 'searchIndex'});
 
 const JobSchema = mongoose.model('Job', jobSchema);
 
@@ -70,7 +77,7 @@ const genFakeJob = (userid: string) => new JobSchema({
     company: faker.company.name(),
     link: faker.internet.url(),
     source: faker.lorem.words(3),
-    user: new Types.ObjectId(userid), 
+    user: Types.ObjectId.createFromHexString(userid), 
     status: faker.helpers.arrayElement(ApplicationStatusEnum.values), 
 })
 

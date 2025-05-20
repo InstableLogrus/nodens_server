@@ -142,6 +142,13 @@ paths:
                     example: filter[jobtitle]=texteatrouver
                   required: false
                   description: filter, can use several fields between brackets -> filter[jobTitle]=text&filter[company]=companyname
+                - in: path
+                  name: query
+                  schema:
+                    type: string
+                  example: query=textatrouver
+                  required: false
+                  description: query, multifields search for the text 
             responses:
                 '200':
                     description: get list

@@ -2,6 +2,7 @@
 import {RequestHandler,  Request, Response, NextFunction } from 'express';
 import Model from '../models/model.ts';
 import { companySchema } from '../models/companySchema.ts';
+import { Types } from 'mongoose';
 
 
 // allowed filters and case conversion
@@ -22,14 +23,27 @@ const jobList: RequestHandler = async (req: Request, res: Response, next: NextFu
     const limit = +(req.query.limit ?? 0);
     const filters = req.query.filter ?? {};
     const offset = +(req.query.offset ?? 0);
+    const query = req.query.query;
+
+    const user : any = req.user;
+
+    if (!user.sub) {
+        console.log("Incomplete payload")
+        res.status(400);
+        return;
+    }
 
     // filter and convert key from params (which can be lowercase)
-    const parsedFilters = Object
+    const parsedFilters : any = Object
         .keys(filters)
         .filter(k=>ALLOWED_FILTERS_KEYS.includes(k))
         .reduce((a:Object, v:string ) => ({ ...a, [ALLOWED_FILTERS[v]]:  { "$regex": filters[v], "$options": "i" } } ), {});
 
-    console.log("parsed query: ", parsedFilters);
+    if (query) parsedFilters['$text'] = {'$search': query};
+
+    // only current user jobs (@TODO: admlin can pass arguments to get all or certain users jobs)
+    parsedFilters.user = {_id: Types.ObjectId.createFromHexString(user.sub)};
+    // console.log("parsed query: ", parsedFilters, Types.ObjectId.createFromHexString(user.sub));
 
     const docs = await Model.JobModel
         .find(parsedFilters)
