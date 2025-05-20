@@ -15,9 +15,9 @@ import { access } from 'fs';
  * @param next 
  */
 const createToken = async (user : any, res: Response, next: NextFunction) => {
-    const { id, email, name } = user;
+    const { _id: id, email, name } = user;
     const payload = {
-        sub: id,
+        sub: id.toString(),
         email,
         name,
         roles: 'manager', // @TODO: derive from DB schema (enum ?)
