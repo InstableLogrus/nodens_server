@@ -10,9 +10,9 @@ const userRefresh = async (req: Request, res: Response, next: NextFunction)  => 
 
     try {
         const { payload, protectedHeader } = await verifyEncryptedToken(previous_refreshToken, process.env.JWT_SECRET);
-        const {email, name, exp, ...rest} = payload;
-        const payload_access = {email, name};
-        const payload_refresh = {email, name, exp} ;
+        const {email, name, exp, sub, ...rest} = payload;
+        const payload_access = {email, name, sub};
+        const payload_refresh = {email, name, sub, exp} ;
 
         const accessToken = await createEncryptedToken(payload_access, process.env.JWT_SECRET, '1h');
         const refreshToken = await createEncryptedToken(payload_refresh, process.env.JWT_SECRET, exp);
