@@ -6,7 +6,6 @@ import Model from '../models/model.ts';
 import { createEncryptedToken } from '../utils/jwt_tools.ts';
 import { access } from 'fs';
 
-
 /**
  * create a new JWT token from user information and send it back to client
  *  generate a response JSON {accessToken} and a secure cookie {refreshToken}

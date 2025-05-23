@@ -4,6 +4,7 @@ import Model from '../models/model.ts';
 import { companySchema } from '../models/companySchema.ts';
 import { Types } from 'mongoose';
 import { JsonWebTokenError } from 'jsonwebtoken';
+import { types } from 'util';
 
 
 // allowed filters and case conversion
@@ -59,15 +60,15 @@ const jobList: RequestHandler = async (req: Request, res: Response, next: NextFu
 // @todo: linking to the current user
 const createJob : RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const obj = await Model.JobModel.create(req.body);
+        const userid = req.user?.sub;
+        const job = {...req.body, user: userid};
+        const newJob = await Model.JobModel.create(job);
 
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify(obj));
-        // res.status(200);
-        // next();
+        res.status(200);
+        res.json(newJob);
 
     } catch {
-        res.status(400);
+        res.status(500);
         next();
     }
 }

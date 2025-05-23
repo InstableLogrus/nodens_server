@@ -17,7 +17,7 @@ const authenticateToken = async (req: Request, res: Response, next: NextFunction
     const authHeader = req.headers['authorization']
     const token :string = authHeader ? authHeader.split(' ')[1] : 'invalid';
 
-    // console.log("token: ", token, process.env.JWT_SECRET);
+    console.log("token: ", token, process.env.JWT_SECRET);
 
     if (token == 'Invalid') res.sendStatus(401)
 
@@ -46,9 +46,17 @@ const authenticateToken = async (req: Request, res: Response, next: NextFunction
                 break;
 
             default:
-                // propagate if not identified
-                console.log("error: ", error.name);
-                res.sendStatus(500);
+                switch (error.name) {
+                    case 'JWEInvalid':
+                        res.sendStatus(403);
+                        // console.log("JWE invalid")
+                        break;
+                    default:
+                        // propagate if not identified
+                        console.log("error: ", error.name);
+                        res.sendStatus(500);
+                }
+                
         }
     }
 }
