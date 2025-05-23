@@ -3,6 +3,7 @@ import {RequestHandler,  Request, Response, NextFunction } from 'express';
 import Model from '../models/model.ts';
 import { companySchema } from '../models/companySchema.ts';
 import { Types } from 'mongoose';
+import { JsonWebTokenError } from 'jsonwebtoken';
 
 
 // allowed filters and case conversion
@@ -59,8 +60,11 @@ const jobList: RequestHandler = async (req: Request, res: Response, next: NextFu
 const createJob : RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const obj = await Model.JobModel.create(req.body);
-        res.status(200);
-        next();
+
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(obj));
+        // res.status(200);
+        // next();
 
     } catch {
         res.status(400);
